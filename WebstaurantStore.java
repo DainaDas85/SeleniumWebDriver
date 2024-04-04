@@ -28,7 +28,7 @@ public class WebstaurantStore {
 	WebElement addToCartButton;
 	
 	@FindBy(xpath = "//*[@id=\"watnotif-wrapper\"]/div/p/div[2]/div[2]/a[1]")
-	WebElement viewCart;
+	WebElement viewCartButton;
 	
 	@FindBy(css = "button[class='emptyCartButton btn btn-mini btn-ui pull-right']")
 	WebElement emptyCartButton;
@@ -111,8 +111,10 @@ public class WebstaurantStore {
 	
 	public void clearCart() throws InterruptedException {
 		
-		viewCart.click();
+		viewCartButton.click();
 		Thread.sleep(3000);
+		Assert.assertEquals(driver.getCurrentUrl(), "https://www.webstaurantstore.com/cart/");
+		Assert.assertEquals(driver.getTitle().contains("WebstaurantStore Cart"), true);
 		Assert.assertEquals(emptyCartButton.isDisplayed(), true);
 		emptyCartButton.click();
 		Thread.sleep(2000);
