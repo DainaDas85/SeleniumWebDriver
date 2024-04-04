@@ -39,11 +39,24 @@ public class WebstaurantStore {
 	@FindBy(xpath = "//*[@id=\"main\"]/div/div[1]/div[1]/div/div[2]/p[1]")
 	WebElement validateEmptyCart;
 	
+	@FindBy(xpath = "//*[@id=\"watnotif-wrapper\"]/div/p/div[2]")
+	WebElement AddedToCartPopUpNotification;
+	
+	@FindBy(css = "a[aria-label ='Homepage, WebstaurantStore']")
+	WebElement HomePageLogo;
+	
+	@FindBy(xpath = "//*[@id=\"gdprBannerMount\"]/div/div/div/div[3]/button")
+	WebElement acceptDataPolicy;
+	
+	
+	
+	
+	
 	
 	
 //	Methods
 	
-	public void searchStainlessWorkTable(String input) throws InterruptedException {
+	public void searchStainlessWorkTable(String input) throws InterruptedException {	
 		searchInput.sendKeys(input);
 		searchInput.submit();
 		
@@ -88,9 +101,11 @@ public class WebstaurantStore {
 		
 		addToCartButton.click();
 		
-		System.out.println("TEST PASSED: The last found item is added to th cart.");
+		System.out.println("TEST PASSED: The last found item is added to the cart.");
 		
 		Thread.sleep(5000);
+		
+		Assert.assertEquals(AddedToCartPopUpNotification.getText().contains("1 item added to your cart"), true);
 		
 	}
 	
@@ -98,12 +113,31 @@ public class WebstaurantStore {
 		
 		viewCart.click();
 		Thread.sleep(3000);
+		Assert.assertEquals(emptyCartButton.isDisplayed(), true);
 		emptyCartButton.click();
 		Thread.sleep(2000);
-		System.out.println("EmptyCart button is clicked.");
+		Assert.assertEquals(EmptyCartConfirmBtn.isDisplayed(), true);
 		EmptyCartConfirmBtn.click();
 		Assert.assertEquals(validateEmptyCart.getText(), "Your cart is empty.");
 		System.out.println("TEST PASSED: The cart is Empty now.");
 	}
+	
+	public void acceptPolicy() throws InterruptedException {
+		
+		acceptDataPolicy.click();
+		
+		Thread.sleep(2000);
+	}
+	
+	public void goToWebstaurantStore() throws InterruptedException {
+		driver.get("https://www.webstaurantstore.com/");
+		
+		Assert.assertEquals(HomePageLogo.isDisplayed(), true);
+		acceptPolicy();
+		
+		System.out.println("TEST PASSED: User is on the WebstaurantStore's Home page");
+	}
+	
+	
 
 }
