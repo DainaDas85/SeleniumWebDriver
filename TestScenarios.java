@@ -33,20 +33,13 @@ public class TestScenarios {
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(45));
 		
 		
-		driver.get("https://www.webstaurantstore.com/");
-		WebElement acceptDataPolicy;
-		acceptDataPolicy = driver.findElement(By.xpath("//*[@id=\"gdprBannerMount\"]/div/div/div/div[3]/button"));
-		acceptDataPolicy.click();
-		
-		Thread.sleep(5000);
-		
-		
 	}
 	
 	
 	@Test
 	public void myTest() throws InterruptedException {
 		WebstaurantStore page = new WebstaurantStore(driver);
+		page.goToWebstaurantStore();
 		page.searchStainlessWorkTable("stainless work table");
 		page.isProductTitleContainsTable();
 		page.addTheLastOfFoundItemsToCart();
